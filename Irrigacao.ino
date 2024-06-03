@@ -1,6 +1,6 @@
 #define pinSensor A0
 #define ledVermelho 9
-#define ledAmarelo 10
+#define ledAmarelo 7
 #define bomba 12
 const int limiteUmidade = 72; //umidade ideal do solo
 const int tempoRega = 8; //tempo em segundos
@@ -24,7 +24,7 @@ void loop() {
     //mostra a mensagem
     Serial.print(umidadeSolo); 
     Serial.println("% ");
-    delay(1000); //espera 3segundos para fazer uma nova leitura
+    delay(3000); //espera 3segundos para fazer uma nova leitura
     }
 
 
