@@ -12,7 +12,6 @@ const char READ_API = "D4IH5OS02S8CZTUD";
 #define ledAmarelo 7
 #define bomba 12
 const int limiteUmidade = 72; //umidade ideal do solo
-const int tempoRega = 8; //tempo em segundos
 int umidadeSolo = 0;
 
 
@@ -27,52 +26,37 @@ void setup() {
 }
 
 void loop() {
-  for (int i=0; i < 5; i++){
-    Serial.println("Umidade: ");
+  bombear(leituraSensor);
+  delay(3000); //espera 3segundos para fazer uma nova leitura
+  }
+
+
+  int leituraSensor(){
+    
     umidadeSolo = analogRead(pinSensor); //faz a leitura do sensor de umidade do solo
     umidadeSolo = map(umidadeSolo, 1023, 0, 0, 100); //converte a variação do sensor de 0 a 1023 para 0 a 100
     //mostra a mensagem
+    Serial.println("Umidade: ");
     Serial.print(umidadeSolo); 
     Serial.println("% ");
-    delay(3000); //espera 3segundos para fazer uma nova leitura
-    }
+    
+  }
 
-
+  void bombear (leituraSensor) {
+    
 if (umidadeSolo < limiteUmidade){
-  if (umidadeSolo < 20){
-    Serial.println("ALERTA: Solo extremamente seco!!");
-    digitalWrite(ledVermelho, LOW);
-    digitalWrite(bomba, LOW);
-    delay(tempoRega*3000);
-    digitalWrite(bomba, HIGH);
-  } 
-  else{
-    Serial.println("Regando...");
-    digitalWrite(ledVermelho, LOW);
-    digitalWrite(ledAmarelo, HIGH);
-    digitalWrite(bomba, HIGH);
-    delay(tempoRega*1000);
-    digitalWrite(bomba, LOW);
+  Serial.println("Regando...");
+  digitalWrite(ledVermelho, HIGH);
+  digitalWrite(ledAmarelo, LOW);
+  digitalWrite(bomba, HIGH);
+  delay(15000);
+  digitalWrite(bomba, LOW);
   }
-}
-if (umidadeSolo >= limiteUmidade){
-  if(umidadeSolo > 80){
-    Serial.println("ALERTA: Solo encharcado!!");
-    digitalWrite(ledAmarelo, LOW);
-    digitalWrite(ledVermelho, HIGH);
-    digitalWrite(bomba, HIGH);
+else {
+  Serial.println("Solo umido");
+  digitalWrite(ledAmarelo, HIGH);
+  digitalWrite(ledVermelho, LOW);
+  digitalWrite(bomba, LOW);
   }
-  else {
-    Serial.println("Solo umido");
-    digitalWrite(ledAmarelo, LOW);
-    digitalWrite(ledVermelho, HIGH);
-    digitalWrite(bomba, HIGH);
-
-  }
+ 
 }
-}
-
-
-
-
-
