@@ -1,3 +1,12 @@
+#include <Wifi.h>
+
+#include <Thingspeak.h>
+const long CHANNEL = "2567533"
+const char WRITE_API = "C0AESWMJU4GDDL0G";
+const char READ_API = "D4IH5OS02S8CZTUD";
+
+
+
 #define pinSensor A0
 #define ledVermelho 9
 #define ledAmarelo 7
@@ -8,12 +17,13 @@ int umidadeSolo = 0;
 
 
 void setup() {
-  
-Serial.begin(9600);
-pinMode (pinSensor, INPUT);
-pinMode (ledVermelho, OUTPUT);
-pinMode (ledAmarelo, OUTPUT);
-pinMode (bomba, OUTPUT);
+  Serial.begin(9600);
+  pinMode (pinSensor, INPUT);
+  pinMode (ledVermelho, OUTPUT);
+  pinMode (ledAmarelo, OUTPUT);
+  pinMode (bomba, OUTPUT);
+
+  ThingSpeak.begin(cliente); //inicializar o thingspeak 
 }
 
 void loop() {
